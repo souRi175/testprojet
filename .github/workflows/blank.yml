@@ -36,5 +36,5 @@ jobs:
             echo "No changes detected. Skipping commit."
           else
             git commit -m "Mise à jour de test.py.txt depuis testprojet"
-            git push https://souRi175:${{ secrets.GITHUB_TOKEN }}@github.com/souRi175/SoapUi.git main
+            git push https://souRi175:${{ secrets.PAT_TOKEN }}@github.com/souRi175/SoapUi.git main
           fi
