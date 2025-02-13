@@ -1,0 +1,40 @@
+name: Sync test.py.txt to SoapUi
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Permet un déclenchement manuel
+
+jobs:
+  sync_file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout testprojet
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Clone SoapUi repository
+        run: |
+          git clone https://github.com/souRi175/SoapUi.git
+          cd SoapUi
+          git checkout main
+
+      - name: Copy test.py.txt to SoapUi
+        run: |
+          cp test.py.txt SoapUi/
+          cd SoapUi
+          git add test.py.txt
+          if git diff --cached --quiet; then
+            echo "No changes detected. Skipping commit."
+          else
+            git commit -m "Mise à jour de test.py.txt depuis testprojet"
+            git push https://souRi175:${{ secrets.GITHUB_TOKEN }}@github.com/souRi175/SoapUi.git main
+          fi
