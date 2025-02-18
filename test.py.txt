@@ -1,4 +1,1 @@
-souha test this pipelinee.
-
-okkkey
-testt111
+launch pipeline ( synchro SoapUI repository)
